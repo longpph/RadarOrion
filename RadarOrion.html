@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>RadarOrion</title>
+</head>
+
+<body>
+    <script>
+       canvas = document.getElementById('radarCanvas');
+        const ctx = canvas.getContext('2d');
+        // Dữ liệu mốc từ API (Chứa dữ liệu rác gây sập hệ thống)
+        const incomingFlights = [
+            { id: "VN11", x: 150, y: 200, speed: 2 },
+            { id: "JS404", x: null, y: "ba trăm", speed: 1 }, // LỖI: Tọa độ sai kiểu dữ liệu
+            { id: "US55", x: 400, y: 150, speed: 3 },
+            null, // LỖI: Object bị rỗng
+            { id: "ER99" } // LỖI: Thiếu tọa độ
+        ];
+        function drawRadar(flights) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // VẤN ĐỀ 1: Không có cơ chế bắt lỗi. Lỗi 1 dòng làm sập toàn bộ vòng lặp.
+            // VẤN ĐỀ 2: Canvas tĩnh, không có requestAnimationFrame.
+            flights.forEach(flight => {
+                ctx.beginPath();
+                ctx.arc(flight.x, flight.y, 5, 0, Math.PI * 2);
+                ctx.fillStyle = "lime";
+                ctx.fill();
+            });
+        }
+        drawRadar(incomingFlights);
+    </script>
+</body>
+</html>
